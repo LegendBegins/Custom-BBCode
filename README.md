@@ -1,5 +1,5 @@
 # Custom Python BBCode
-An easily-extendable recursive BBCode parser for Python
+An easily-extendable BBCode parser for Python
 
 How to customize:
 
