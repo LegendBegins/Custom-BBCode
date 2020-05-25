@@ -10,7 +10,7 @@ RESERVED_TAG = 'bbcode'
 
 
 def onMisalignedTags():
-	print('Some tags appear to be misalligned')
+	print('Some tags appear to be misaligned')
 
 def processCloseTag(tag, data = None):
 	return '</' + tag + '>'
