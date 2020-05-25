@@ -13,7 +13,7 @@ How to customize:
 
 Notes: 
 
-The data variable in the tagprocessing functions contains variable data that might exist within tags such as [quote=@LegendBegins]This is a neat script![/quote]. Examples have been provided.
+The data variable in the tag processing functions contains variable data that might exist within tags such as [quote=@LegendBegins]This is a neat script![/quote]. Examples have been provided.
 
 Tags are currently case sensitive, but this can be patched by converting all instances of the tag variable in parseBBCode() to lowercase
 
