@@ -17,6 +17,5 @@ The data variable in the tag processing functions contains variable data that mi
 
 Tags are currently case sensitive, but this can be patched by converting all instances of the tag variable in parseBBCode() to lowercase
 
-This is still being tested, so I don't make stability guarantees as of yet. Please try to break it and let me know how you did it! Stack overflows don't count.
 
 Feel free to subscribe to me over at https://YouTube.com/LegendBegins!
