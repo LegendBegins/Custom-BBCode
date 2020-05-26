@@ -17,8 +17,8 @@ def processTag(tag, data = None):
 
 tagList.extend(stopList)
 
-tagRegex = '(?<=\[)(' + '|'.join(tagList) + ')(\\s*=.*?)?(?=\])'
-endTagRegex = '(?<=\[/)(' + '|'.join(tagList) + ')(?=\])'
+tagRegex = '(?<=\\[)(' + '|'.join(tagList) + ')(\\s*=.*?)?(?=\\])'
+endTagRegex = '(?<=\\[/)(' + '|'.join(tagList) + ')(?=\\])'
 #Positive lookbehind and lookahead to grab the tag we care about
 
 
@@ -45,6 +45,13 @@ def findClosingNoParse(tag, message):
 	else:
 		return endResult.start() - 2, message[:endResult.start() - 2]
 		#Return the content just before the closing tag starts (accounting for '[/')
+
+#TO DO: Ignore case (could just set tag variable to lower?)
+#TO DO: Escape evil chars
+#TO DO: Add tags that don't include closing tags (e.g. [*])
+#TO DO: @mentions
+#TO DO: Enable tolerance for whitespace
+#One option for guessing what the user meant: Add appropriate tag and check if it fixes the error. If not, delete tag and check. If not, change tag into appropriate tag and check.
 
 def parseBBCode(message):
 	contentEnd = 0
@@ -90,11 +97,13 @@ def parseBBCode(message):
 			contentEnd += parserEnd
 			tagStack.pop()
 		else:
+			rebuiltString += message[contentEnd:]
 			#If we're out of tags
 			if tagStack:
-				#If we don't have enough closing tags
+				while tagStack:
+					rebuiltString += processCloseTag(tagStack.pop(), None)
+					#Finish adding missing ending tags
 				onMisalignedTags()
-			rebuiltString += message[contentEnd:]
 			break
 	return rebuiltString
 
@@ -102,5 +111,5 @@ def parseBBCode(message):
 	
 toEvaluate = '[i][b][quote=@LegendBegins]Hello![/quote][/b][b]Hello![/b][/i][b]Hello![/b] sdfs'
 print(parseBBCode(toEvaluate))
-toEvaluate = 'first[b]second[/b]third[i]fourth[/i]fifth'	
+toEvaluate = 'first[b]second[/b]third[i]fourth[/i]fifth'
 print(parseBBCode(toEvaluate))
