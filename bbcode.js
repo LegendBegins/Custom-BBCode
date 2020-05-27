@@ -53,12 +53,6 @@ function findClosingNoParse(tag, message){
 	}
 }
 
-//TO DO{ Ignore case (could just set tag variable to lower?)
-//TO DO{ Escape evil chars
-//TO DO{ Add tags that don't include closing tags (e.g. [*])
-//TO DO{ @mentions
-//TO DO{ Enable tolerance for whitespace
-
 function parseBBCode(message){
 	let contentEnd = 0
 	//This value changes as we scan through the tag set
