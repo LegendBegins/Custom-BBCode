@@ -4,6 +4,7 @@ stopList = ['code']
 #Noparse tags
 tagList = ['b','i', 'quote']
 #Regular tags with opening and closing versions
+singleList = ['br']
 
 def onMisalignedTags():
 	print('Some tags appear to be misaligned')
@@ -16,6 +17,7 @@ def processTag(tag, data = None):
 
 
 tagList.extend(stopList)
+tagList.extend(singleList)
 
 tagRegex = '(?<=\\[)(' + '|'.join(tagList) + ')(\\s*=.*?)?(?=\\])'
 endTagRegex = '(?<=\\[/)(' + '|'.join(tagList) + ')(?=\\])'
@@ -73,7 +75,10 @@ def parseBBCode(message):
 			rebuiltString += processTag(tag, tagData)
 			#Add everything up to and including the tag to the rebuilt string. We have to remember that results is always going to be offset by contentEnd
 			contentEnd += result.end() + 1
-			if tag in stopList:
+			if tag in singleList:
+				tagStack.pop()
+				#If it lacks a closing tag, we can just pop it from the stack
+			elif tag in stopList:
 				#If we encounter a noparse tag
 				endIndex, embeddedContent = findClosingNoParse(tag, message[contentEnd:])
 				contentEnd += endIndex
@@ -109,7 +114,7 @@ def parseBBCode(message):
 
 
 	
-toEvaluate = '[i][b][quote=@LegendBegins]Hello![/quote][/b][b]Hello![/b][/i][b]Hello![/b] sdfs'
+toEvaluate = '[i][b][br][quote=@LegendBegins]Hello![/quote][/b][b]Hello![/b][/i][b]Hello![/b] sdfs'
 print(parseBBCode(toEvaluate))
 toEvaluate = 'first[b]second[/b]third[i]fourth[/i]fifth'
 print(parseBBCode(toEvaluate))
