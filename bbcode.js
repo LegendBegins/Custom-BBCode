@@ -2,6 +2,8 @@ let stopList = ['code']
 //Noparse tags
 let tagList = ['b','i', 'quote']
 //Regular tags with opening and closing versions
+let singleList = ['br']
+//Tags that don't have a closing counterpart
 
 function onMisalignedTags(){
 	console.log('Some tags appear to be misaligned')
@@ -14,6 +16,7 @@ function processTag(tag, data = false){
 }
 
 tagList = tagList.concat(stopList)
+tagList = tagList.concat(singleList)
 
 let tagRegex = new RegExp('(?<=\\[)(' + tagList.join('|') + ')(\\s*=.*?)?(?=\\])', '')
 let endTagRegex = new RegExp('(?<=\\[/)(' + tagList.join('|') + ')(?=\\])', '')
@@ -76,13 +79,16 @@ function parseBBCode(message){
 			rebuiltString += processTag(tag, tagData)
 			//Add everything up to and including the tag to the rebuilt string. We have to remember that results is always going to be offset by contentEnd
 			contentEnd += result.index + result[0].length + 1
-			if(stopList.includes(tag)){
+			if(singleList.includes(tag)){
+				tagStack.pop()
+			}
+			else if(stopList.includes(tag)){
 				//if we encounter a noparse tag
 				let [endIndex, embeddedContent] = findClosingNoParse(tag, message.slice(contentEnd,))
 				contentEnd += endIndex
 				rebuiltString += embeddedContent
 				//We have to add the index of the result as well
-				}
+			}
 		}
 		else if(endResult){
 			//if the next tag is a closing one
@@ -123,7 +129,7 @@ function parseBBCode(message){
 
 
 	
-let toEvaluate = '[i][b][code][quote=@LegendBegins]Hello![/quote][/code][/b][b]Hello![/b][/i][b]Hello![/b] sdfs'
+let toEvaluate = '[i][br][b][quote=@LegendBegins]Hello![/quote][/b][b]Hello![/b][/i][b]Hello![/b] sdfs'
 console.log(parseBBCode(toEvaluate))
 toEvaluate = 'first[b]second[/b]third[i]fourth[/i]fifth'	
 console.log(parseBBCode(toEvaluate))
