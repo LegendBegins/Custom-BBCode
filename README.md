@@ -7,9 +7,11 @@ How to customize:
 
 2. Add tags that indicate following content should not be parsed to stopList
 
-3. Modify behavior of onMisalignedTags(), processCloseTag(), and processTag()
+3. Add tags that do not have closing counterparts to singleList
 
-4. Have fun!
+4. Modify behavior of onMisalignedTags(), processCloseTag(), and processTag()
+
+5. Have fun!
 
 Notes: 
 
