@@ -48,12 +48,6 @@ def findClosingNoParse(tag, message):
 		return endResult.start() - 2, message[:endResult.start() - 2]
 		#Return the content just before the closing tag starts (accounting for '[/')
 
-#TO DO: Ignore case (could just set tag variable to lower?)
-#TO DO: Escape evil chars
-#TO DO: Add tags that don't include closing tags (e.g. [*])
-#TO DO: @mentions
-#TO DO: Enable tolerance for whitespace
-#One option for guessing what the user meant: Add appropriate tag and check if it fixes the error. If not, delete tag and check. If not, change tag into appropriate tag and check.
 
 def parseBBCode(message):
 	contentEnd = 0
