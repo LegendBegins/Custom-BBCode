@@ -89,7 +89,7 @@ function parseBBCode(message){
 			rebuiltString += message.slice(contentEnd, contentEnd + endResult.index - 2)
 			let endTag = endResult[0]
 			let parserEnd = endResult.index + endResult[0].length + 1
-			if(!tagStack){
+			if(tagStack.length < 1){
 				//if this is an unpaired closing tag, treat it as text and keep going
 				rebuiltString += message.slice(contentEnd, parserEnd)
 				contentEnd += parserEnd
