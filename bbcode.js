@@ -24,7 +24,7 @@ let endTagRegex = new RegExp('(?<=\\[/)(' + tagList.join('|') + ')(?=\\])', '')
 
 
 function getTagAndOptionalData(tagSearch){
-	//Grab the two capturing groups (tag and the tag data) and return them. Return empty by functionault
+	//Grab the two capturing groups (tag and the tag data) and return them. Return empty by default
 	let mainTag = ''
 	let innerData = ''
 	if(tagSearch){
