@@ -85,7 +85,7 @@ def parseBBCode(message):
 			parserEnd = endResult.end() + 1
 			if not tagStack:
 				#If this is an unpaired closing tag, treat it as text and keep going
-				rebuiltString += message[contentEnd:parserEnd]
+				rebuiltString += message[contentEnd:contentEnd + parserEnd]
 				contentEnd += parserEnd
 				continue
 			elif endTag != tagStack[-1]:
