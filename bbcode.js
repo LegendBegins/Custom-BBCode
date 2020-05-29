@@ -367,15 +367,6 @@ var XBBCODE = (function() {
         },
     }
 
-	var tagInStack = function(tagStack, tag){
-		for(let i = 0; i < tagStack.length; i++)
-		{
-			if(tagStack[i].tag == tag){
-				return true
-			}
-		}
-		return false
-	}
 	var makeUnique = function(a) {
 		var seen = {};
 		return a.filter(function(item) {
