@@ -80,7 +80,6 @@ def parseBBCode(message):
 				#We have to add the index of the result as well
 		elif endResult:
 			#If the next tag is a closing one
-			rebuiltString += message[contentEnd:contentEnd + endResult.start() - 2]
 			endTag = endResult.groups()[0]
 			parserEnd = endResult.end() + 1
 			if not tagStack:
@@ -92,6 +91,7 @@ def parseBBCode(message):
 				#If our tags don't match
 				onMisalignedTags()
 				endTag = tagStack[-1]
+			rebuiltString += message[contentEnd:contentEnd + endResult.start() - 2]
 			rebuiltString += processCloseTag(endTag, None)
 			contentEnd += parserEnd
 			tagStack.pop()
